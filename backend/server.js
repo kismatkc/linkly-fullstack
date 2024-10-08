@@ -1,13 +1,13 @@
 import dotenv from "dotenv";
 import express from "express";
 import CORS from "cors";
-import { ensureDatabaseConnection } from "./lib/util.js";
+import { corsOption, ensureDatabaseConnection } from "./lib/util.js";
 import createUserRoute from "./routes/create-user-route.js";
 import authenticateUserRoute from "./routes/authenticate-user-route.js";
 import checkUserRoute from "./routes/check-user-route.js";
 dotenv.config();
 const app = express();
-app.use(CORS());
+app.use(CORS(corsOption));
 app.use(express.json());
 const PORT = process.env.port; // Corrected environment variable
 if (!PORT) {
