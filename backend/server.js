@@ -13,6 +13,7 @@ const PORT = process.env.port; // Corrected environment variable
 if (!PORT) {
   throw new Error("Please provide a valid port");
 }
+//hello
 ensureDatabaseConnection();
 app.use("/api", createUserRoute);
 app.use("/api", authenticateUserRoute);
