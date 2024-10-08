@@ -19,7 +19,7 @@ app.use("/api", createUserRoute);
 app.use("/api", authenticateUserRoute);
 app.use("/api", checkUserRoute);
 app.use("/", (req, res) => {
-  res.send("Hello worl");
+  res.send("Hello worlm");
 });
 app.use((err, req, res, next) => {
   console.log(err);
