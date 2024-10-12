@@ -2,8 +2,6 @@
 import { SignInForm } from "@/types/";
 import React from "react";
 import { Button } from "./ui/button";
-import { toast } from "sonner";
-import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
@@ -12,25 +10,10 @@ function SignIn() {
     register,
     handleSubmit,
     reset,
-    formState: { errors,isValid },
+    formState: { errors, isValid },
   } = useForm<SignInForm>();
   const router = useRouter();
-  const onSubmit = async (data: SignInForm) => {
-    try {
-      const response = await signIn("credentials", {
-        redirect: false,
-        email: data.email,
-        password: data.password,
-      });
-      if (response?.ok) {
-       return router.push("/");
-      }
-      throw new Error("Invalid credentials!");
-    } catch (error: any) {
-    reset({password: ""})
-      toast.error(error.message!);
-    }
-  };
+  const onSubmit = async (data: SignInForm) => {};
 
   return (
     <form
@@ -88,7 +71,10 @@ function SignIn() {
         {errors.password && <p>{errors.password.message}</p>}
       </div>
 
-      <Button className="bg-brand-grey-lite rounded-full md:max-w-[40%] " disabled={!isValid}>
+      <Button
+        className="bg-brand-grey-lite rounded-full md:max-w-[40%] "
+        disabled={!isValid}
+      >
         Log in
       </Button>
     </form>

@@ -1,20 +1,15 @@
-import User from "../models/user.js";
-import bcrypt from "bcrypt";
-export default async function authenticateUser(req, res) {
-  const { email, password } = req.body;
+import { createJWT } from "../lib/util.js";
+
+async function AuthenticateUser(req, res) {
   try {
-    const user = await User.findOne({ email });
-    if (!user) return res.status(401).send("Invalid credentials");
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (isMatch) {
-      console.log(user);
-      return res.status(200).json({ user });
-    } else {
-      return res.status(401).json({ message: "Authentication failed" });
-    }
+    const user = req.body;
+    const token = createJWT(user);
+    console.log(token);
+
+    res.status(200).send(token);
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Authentication failed please try again" });
+    res.status(500).send(error);
   }
 }
+
+export default AuthenticateUser;

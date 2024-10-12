@@ -9,7 +9,6 @@ const Account = () => {
   return (
     <section className=" overflow-hidden h-screen w-full  flex flex-col max-w-5xl ">
       <SignIn />
-
       <div className="flex-row-center [&>span]:mr-1 pb-8 ">
         <span className="border-t-2 grow border-dashed"></span>
         <span className="mx-2">OR</span>
@@ -18,8 +17,10 @@ const Account = () => {
       <Button
         variant="outline"
         className="rounded-full flex-row-center w-full"
-        onClick={() => {
-          signIn("google", { callbackUrl: "/" });
+        onClick={async () => {
+          const response = await signIn("google", {
+            callbackUrl: "/",
+          });
         }}
       >
         <figure className="flex-row-center gap-x-2">

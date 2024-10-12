@@ -5,22 +5,22 @@ import AutoPasteClipboardToggle from "./auto-paste-clipboard";
 import LinkHistory from "./link-history";
 import { LinkDetailsProps } from "@/types/";
 
-
 const Main = ({ linkDetails }: { linkDetails: LinkDetailsProps[] }) => {
   const [checkedState, setCheckedState] = useState<boolean>(false);
   const [textFromClipboard, setTextFromClipboard] = useState<string>("");
   useEffect(() => {
+    if (!checkedState) return;
     const getTextFromClipboard = async () => {
       const text = await navigator.clipboard.readText();
       if (checkedState && text) {
         setTextFromClipboard(text);
       }
     };
+
     getTextFromClipboard();
   }, [checkedState]);
   return (
     <section className="flex-column-center">
-    
       <section className="flex flex-col gap-y-8 ">
         <div className="flex-column-center md:text-5xl">
           <h1 className="gradient-styling text-nowrap">Shorten Your</h1>

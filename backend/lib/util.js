@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
 global.mongoDbConnnection = null;
 export async function connectToDatabase() {
   try {
@@ -18,6 +19,12 @@ export async function ensureDatabaseConnection() {
   }
 }
 
-export const corsOption = {
+export const corsOption = () => ({
   origin: process.env.FRONTEND_URL,
-};
+  credentials: true,
+});
+
+export const createJWT = (user) =>
+  jwt.sign(user, process.env.JWT_SECRET_KEY, {
+    expiresIn: "1h",
+  });

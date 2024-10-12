@@ -17,10 +17,15 @@ function SignUp() {
   const router = useRouter();
   const onSubmit = async (data: SignUpForm) => {
     try {
-      const response = await Api.post("/create-user", data);
-      if (response.data) router.push("/log-in");
-    } catch (error: any) {
-      toast.error("Account creation failed please try again");
+      const googleUser = await Api.post("/check-google-user", {
+        email: data.email,
+      });
+
+      const response = await Api.post("/create-linkly-user", data);
+
+      router.push("/log-in");
+    } catch (error) {
+      toast.error("Error creating account please try again");
     }
   };
 
@@ -33,7 +38,7 @@ function SignUp() {
         <h1 className="text-md md:text-xl text-left font-semibold">
           Create an account
         </h1>
-        <Link href="/sign-in" className="underline">
+        <Link href="/log-in" className="underline">
           Login instead
         </Link>
       </div>
