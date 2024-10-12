@@ -5,7 +5,7 @@
   "description": "This is the backend for LInkly",
   "main": "server.ts",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon server.js",
+    "dev": "nodemon server.js",
     "build": "tsc"
   },
   "author": "kismat kc",

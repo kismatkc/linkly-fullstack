@@ -6,6 +6,9 @@ import CreateLinklyUserRoute from "./routes/create-linkly-user-route.js";
 import CreateGoogleUserRoute from "./routes/create-google-user-route.js";
 import CheckGoogleUserRoute from "./routes/check-user-existence-route.js";
 import AuthenticateUserRoute from "./routes/authentice-user-route.js";
+import AuthenticateLinklyUserRoute from "./routes/authentice-linklyuser-route.js";
+import AuthenticateGoogleUserRoute  from "./routes/authentice-googleuser-route.js";
+import CreateUrlRoute from "./routes/create-url-route.js";
 
 dotenv.config();
 
@@ -24,6 +27,9 @@ app.use("/api", CreateLinklyUserRoute);
 app.use("/api", CreateGoogleUserRoute);
 app.use("/api", CheckGoogleUserRoute);
 app.use("/api", AuthenticateUserRoute);
+app.use("/api", AuthenticateLinklyUserRoute);
+app.use("/api", AuthenticateGoogleUserRoute);
+app.use("/api", CreateUrlRoute);
 app.use("/", (req, res) => {
   res.send("Hello worlbmdpoo");
 });
