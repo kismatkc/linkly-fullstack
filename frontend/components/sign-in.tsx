@@ -4,6 +4,7 @@ import React from "react";
 import { Button } from "./ui/button";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 function SignIn() {
   const {
@@ -13,7 +14,15 @@ function SignIn() {
     formState: { errors, isValid },
   } = useForm<SignInForm>();
   const router = useRouter();
-  const onSubmit = async (data: SignInForm) => {};
+  const onSubmit = async (data: SignInForm) => {
+    try {
+      await signIn("credentials",{
+        redirect: false,
+        ...data
+      });
+      router.push("/")
+    } catch (error) {}
+  };
 
   return (
     <form

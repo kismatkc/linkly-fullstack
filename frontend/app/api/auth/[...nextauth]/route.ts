@@ -5,22 +5,31 @@ import { JWT } from "next-auth/jwt";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import { toast } from "sonner";
 
 const authOptions: NextAuthOptions = {
   providers: [
-    // CredentialsProvider({
-    //   name: "credentials",
-    //   credentials: {
-    //     email: {
-    //       label: "Email",
-    //       type: "email",
-    //       placeholder: "you@example.com",
-    //     },
-    //     password: { label: "Password", type: "password" },
-    //   },
-    //   async authorize(credentials) {},
-    // }),
+    CredentialsProvider({
+      name: "credentials",
+      credentials: {
+        email: {
+          label: "Email",
+          type: "email",
+          placeholder: "you@example.com",
+        },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        try {
+          const response = await Api.post("/authenticate-linklyuser", credentials)
+
+
+
+          return response.data;
+        } catch (error) {
+          return false;
+        }
+      },
+    }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
@@ -31,9 +40,13 @@ const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async signIn(params) {
+
       if (!params) return false;
+
       //for token
-      const response = await Api.post("/authenticate-user", params.user);
+      //@ts-ignore
+      const response = await Api.post("/authenticate-user", params.user[0]);
+
       if (!(params.account?.provider === "google")) return true;
 
       //@ts-ignore
@@ -60,15 +73,46 @@ const authOptions: NextAuthOptions = {
         return true;
       }
     },
-    // async jwt({ token, user }) {
-    //   //@ts-ignore
-    //   if (user?.firstName) {
-    //     //@ts-ignore
-    //     token.name = user.firstName;
-    //     return token;
-    //   }
-    //   return token;
-    // },
+    async jwt({ token, user, session }) {
+
+      //@ts-ignore
+      if (user?.[0]) {
+        //@ts-ignore
+        token.id = user[0]._id
+        //@ts-ignore
+        token.name = user[0].firstName
+
+      } else {
+        if (user?.email) {
+          const response = await Api.post("/authenticate-googleuser", { email: user.email })
+          console.log("hey");
+          console.log(response.data);
+          
+          
+          token.id = response.data?.[0]._id;
+          return token
+        }
+
+      }
+
+
+      return token
+
+    },
+    async session(
+      { session, token, user }
+    ) {
+
+      //@ts-ignore
+      session.user.name = token.name
+      //@ts-ignore
+      session.user.id = token.id
+      //@ts-ignore
+console.log(session);
+
+      return session;
+    }
+
   },
 };
 

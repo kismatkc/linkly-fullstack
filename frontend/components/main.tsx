@@ -4,10 +4,14 @@ import React, { useEffect, useState } from "react";
 import AutoPasteClipboardToggle from "./auto-paste-clipboard";
 import LinkHistory from "./link-history";
 import { LinkDetailsProps } from "@/types/";
+import { toast, Toaster } from "sonner";
+import { Api } from "@/lib/utils";
+import { useSession } from "next-auth/react";
 
 const Main = ({ linkDetails }: { linkDetails: LinkDetailsProps[] }) => {
   const [checkedState, setCheckedState] = useState<boolean>(false);
   const [textFromClipboard, setTextFromClipboard] = useState<string>("");
+  const { data: session } = useSession();
   useEffect(() => {
     if (!checkedState) return;
     const getTextFromClipboard = async () => {
@@ -31,14 +35,13 @@ const Main = ({ linkDetails }: { linkDetails: LinkDetailsProps[] }) => {
           Linkly is an efficient and easy-to-use URL shortening service that
           streamlines your online experience.
         </p>
-        <div className="p-8 flex items-stretch md:p-20 justify-center ">
+        <div className="p-8 flex items-stretch md:p-20 justify-center">
           <div className="flex-row-center rounded-full -mr-9 z-20">
             <Link />
           </div>
           <input
             value={textFromClipboard}
             onChange={(e) => {
-              console.log(e.target.value);
               setTextFromClipboard(e.target.value);
             }}
             className="border rounded-full grow text-center md:text-xl z-10 max-w-md"
@@ -47,10 +50,35 @@ const Main = ({ linkDetails }: { linkDetails: LinkDetailsProps[] }) => {
 
           <ArrowRightCircleIcon
             size={55}
-            className="stroke-brand-blue -ml-[52px] z-20  [&>circle]:fill-brand-blue  [&>path]:stroke-white -mt-[1px]"
+            className="stroke-brand-blue cursor-pointer -ml-[52px] z-20  [&>circle]:fill-brand-blue  [&>path]:stroke-white -mt-[1px]"
             strokeWidth={1}
+            onClick={() => {
+              const urlRegex =
+                /^https:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/;
+              if (!urlRegex.test(textFromClipboard)) {
+                setTextFromClipboard("");
+                return toast.error("Invlaid link");
+              }
+              //@ts-ignore
+              const response = Api.post("/create-url", {
+                longUrl: textFromClipboard,
+                //@ts-ignore
+                id: session?.user.id,
+              });
+              setTextFromClipboard("");
+              return toast.success("Link shortening succesful");
+            }}
           />
         </div>
+
+        <p
+          className={`text-center -mt-20 text-red-500 visible ${
+            textFromClipboard && "invisible"
+          }`}
+        >
+          Please input a url to shorten it.
+        </p>
+
         <AutoPasteClipboardToggle setCheckedState={setCheckedState} />
         <p className="text-lg p-4 text-center md:text-xl">
           You can create&nbsp;
