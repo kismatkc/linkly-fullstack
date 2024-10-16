@@ -3,14 +3,17 @@ import crypto from "crypto";
 
 export default async function CreateUrl(req, res) {
   try {
-    const { longUrl, id } = req.body;
-    const shortLink = `https://www.unfiltereddopamine.com/${crypto
+    const { longUrl, userId } = req.body;
+    // const shortLink = `https://www.unfiltereddopamine.com/${crypto
+    //   .randomBytes(4)
+    //   .toString("hex")}`;
+    const shortLink = `http://localhost:4000/${crypto
       .randomBytes(4)
       .toString("hex")}`;
     const url = await Url.create({
       originalLink: longUrl,
       shortLink: shortLink,
-      user: id,
+      userId: userId,
     });
 
     res.status(200).json(url);

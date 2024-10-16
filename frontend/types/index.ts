@@ -2,7 +2,7 @@ export interface LinkDetailsProps {
   shortLink: string;
   originalLink: string;
   qrCode: string; // Placeholder for actual QR code library type
-  clicks: number;
+
   status: string;
   date: Date;
 }
@@ -11,7 +11,6 @@ export type DesktopHistoryTableColumn = {
   shortLink: string;
   originalLink: string;
   qrCode: string;
-
   status: string;
   date: Date;
 };

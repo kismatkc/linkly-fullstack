@@ -52,21 +52,26 @@ const Main = ({ linkDetails }: { linkDetails: LinkDetailsProps[] }) => {
             size={55}
             className="stroke-brand-blue cursor-pointer -ml-[52px] z-20  [&>circle]:fill-brand-blue  [&>path]:stroke-white -mt-[1px]"
             strokeWidth={1}
-            onClick={() => {
-              const urlRegex =
-                /^https:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/;
-              if (!urlRegex.test(textFromClipboard)) {
-                setTextFromClipboard("");
-                return toast.error("Invlaid link");
-              }
-              //@ts-ignore
-              const response = Api.post("/create-url", {
-                longUrl: textFromClipboard,
+            onClick={async () => {
+              try {
+                const urlRegex =
+                  /^https:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/;
+                if (!urlRegex.test(textFromClipboard)) {
+                  setTextFromClipboard("");
+                  return toast.error("Invlaid link");
+                }
                 //@ts-ignore
-                id: session?.user.id,
-              });
-              setTextFromClipboard("");
-              return toast.success("Link shortening succesful");
+                const response = await Api.post("/create-url", {
+                  longUrl: textFromClipboard,
+                  //@ts-ignore
+                  userId: session?.user.id,
+                });
+                setTextFromClipboard("");
+                return toast.success("Link shortening succesful");
+              } catch (error) {
+                setTextFromClipboard("");
+                toast.error("Invalid link");
+              }
             }}
           />
         </div>

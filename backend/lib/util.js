@@ -21,6 +21,7 @@ export async function ensureDatabaseConnection() {
 
 export const corsOption = () => ({
   origin: process.env.FRONTEND_URL,
+
   credentials: true,
 });
 
@@ -28,3 +29,10 @@ export const createJWT = (user) =>
   jwt.sign(user, process.env.JWT_SECRET_KEY, {
     expiresIn: "1h",
   });
+
+export const verifyJwt = (req, res, next) => {
+  console.log("Cookies received:", req.cookies);
+  console.log("Token cookie:", req.cookies.token);
+  console.log("Headers:", req.headers);
+  next();
+};

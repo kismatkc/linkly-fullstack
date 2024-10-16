@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
@@ -21,7 +19,7 @@ const columns: ColumnDef<DesktopHistoryTableColumn>[] = [
       return (
         <div className="flex justify-between ">
           <span className="text-nowrap">{shortLink}</span>
-          <CopyToClipboard text={shortLink}/>
+          <CopyToClipboard text={shortLink} />
         </div>
       );
     },
@@ -38,9 +36,10 @@ const columns: ColumnDef<DesktopHistoryTableColumn>[] = [
   {
     accessorKey: "qrCode",
     header: "QR Code",
-    cell: ({row})=> {
-      const url: string = row.getValue("qrCode");
-      return <UrlQrcode url={url}  />}
+    cell: ({ row }) => {
+      const url: string = row.getValue("shortLink");
+      return <UrlQrcode url={url} />;
+    },
   },
   {
     accessorKey: "date",
@@ -57,7 +56,7 @@ const columns: ColumnDef<DesktopHistoryTableColumn>[] = [
       );
     },
     cell: ({ row }) => {
-      const dataObject: Date = row.getValue("date");
+      const dataObject: Date = new Date(row.getValue("date"));
       const formattedDate = dataObject.toLocaleDateString("en-US", {
         year: "numeric",
         month: "short",
@@ -67,16 +66,16 @@ const columns: ColumnDef<DesktopHistoryTableColumn>[] = [
       return <span className="text-nowrap">{formattedDate}</span>;
     },
   },
-    {
-      accessorKey: "action",
-      header: "Action",
-      cell: () => (
-        <div className="flex gap-x-8">
-          <SquarePen className="cursor-pointer" size={20} />
-          <Trash className="cursor-pointer " size={20} />
-        </div>
-      ),
-    },
+  {
+    accessorKey: "action",
+    header: "Action",
+    cell: () => (
+      <div className="flex gap-x-8">
+        <SquarePen className="cursor-pointer" size={20} />
+        <Trash className="cursor-pointer " size={20} />
+      </div>
+    ),
+  },
 ];
 
 export default columns;
