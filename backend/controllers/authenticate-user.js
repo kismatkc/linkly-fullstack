@@ -8,8 +8,8 @@ async function AuthenticateUser(req, res) {
 
     const cookieOptions = {
       httpOnly: true,
-      secure: false,
-      sameSite: "None",
+      secure: true,
+      sameSite: "Lax",
       maxAge: 60 * 60 * 1000,
       path: "/", // Make sure the cookie is available for all paths
     };
