@@ -5,8 +5,10 @@ async function RedirectUser(req, res) {
     const { shortCode } = req.params;
     const response = await Url.find({
       // shortLink: `http://localhost:4000/${shortCode}`,
-      shortLink: `https://31e908fa-c906-497c-9c86-bb5450c92e73-00-3dkixqsx8vovm.kirk.repl.co:3000/${shortCode}`,
+      shortLink: `https://backend.unfiltereddopamine.com/${shortCode}`,
     });
+    //   shortLink: `https://31e908fa-c906-497c-9c86-bb5450c92e73-00-3dkixqsx8vovm.kirk.repl.co:3000/${shortCode}`,
+    // });
     if (!response.length > 0)
       return res.status(404).json({ message: "User not found" });
     const originalLink = response[0].originalLink;
