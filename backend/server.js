@@ -35,7 +35,7 @@ app.use("/api", AuthenticateLinklyUserRoute);
 app.use("/api", AuthenticateGoogleUserRoute);
 app.use("/", RedirectUserRoute);
 
-app.use("/", verifyJwt);
+app.use("/api", verifyJwt);
 
 app.use("/api", CreateUrlRoute);
 app.use("/api", GetUrlsRoute);
