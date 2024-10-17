@@ -21,6 +21,8 @@ export async function ensureDatabaseConnection() {
 
 export const corsOption = () => ({
   origin: process.env.FRONTEND_URL,
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 
   credentials: true,
 });
@@ -31,11 +33,10 @@ export const createJWT = (user) =>
   });
 
 export const verifyJwt = (req, res, next) => {
- try{
-   const valid = jwt.verify(req.cookies.token, process.env.JWT_SECRET_KEY);
-   next();
- }catch(error){
-   console.log(error)
- 
- }
+  try {
+    const valid = jwt.verify(req.cookies.token, process.env.JWT_SECRET_KEY);
+    next();
+  } catch (error) {
+    console.log(error);
+  }
 };
