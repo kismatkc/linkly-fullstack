@@ -8,28 +8,24 @@ import { DesktopHistoryTableColumn } from "@/types";
 
 export default function Home() {
   const { data } = useSession();
-  const [urls, setUrls] = useState<DesktopHistoryTableColumn[]>([
-    {
-      shortLink: "https://short.link/mno345",
-      originalLink: "https://www.example.com/events/annual-conference",
-      qrCode: "QR_CODE_DATA_5",
-
-      status: "expired",
-      date: new Date("2023-06-10T11:00:00Z"),
-    },
-  ]);
-
+  const [urls, setUrls] = useState<DesktopHistoryTableColumn[]>([ ]);
+function refreshUrls(refreshedUrls: DesktopHistoryTableColumn[]){
+  setUrls(refreshedUrls);
+}
   useEffect(() => {
     async function getUrls() {
       if (!data) return;
       try {
-        console.log("cookie", document.cookie);
+ const user = data.user;
+        if (user) {
+          const response = await Api.post("/authenticate-user", user);
+        }
 
         //@ts-ignore
         const _id = data?.user?.id;
 
         const response = await Api.get(`/url/${_id}`);
-        console.log(response.data);
+        //@ts-ignore
 
         if (!response.data.data.length > 0) return;
         setUrls(response.data.data);
@@ -40,7 +36,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <Main linkDetails={urls} />;
+      <Main linkDetails={urls} refreshUrls={refreshUrls}/>;
     </>
   );
 }

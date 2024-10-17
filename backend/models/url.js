@@ -8,7 +8,7 @@ const USERSCHEMA = new Schema({
   originalLink: {
     type: String,
     required: true,
-    unique: true,
+
   },
   status: {
     type: String,
@@ -25,5 +25,6 @@ const USERSCHEMA = new Schema({
     required: true,
   },
 });
+USERSCHEMA.index({originalLink: 1, userId: 1},{unique: true})
 const Url = mongoose.model("Url", USERSCHEMA);
 export default Url;

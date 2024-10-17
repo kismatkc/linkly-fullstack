@@ -8,14 +8,13 @@ async function AuthenticateUser(req, res) {
 
     const cookieOptions = {
       httpOnly: true,
-      secure: true,
+      secure: false,
       sameSite: "None",
       maxAge: 60 * 60 * 1000,
       path: "/", // Make sure the cookie is available for all paths
     };
     res.cookie("token", token, cookieOptions);
-    console.log("Response headers:", res.getHeaders());
-    console.log("Cookies in response:", res.getHeaders()["set-cookie"]);
+   
     return res.status(200).json({ message: "Authentication successful" });
   } catch (error) {
     console.error("Error in AuthenticateUser:", error);

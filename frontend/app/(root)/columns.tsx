@@ -3,6 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, CopyIcon, SquarePen, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 import { DesktopHistoryTableColumn } from "@/types/index";
@@ -18,7 +19,9 @@ const columns: ColumnDef<DesktopHistoryTableColumn>[] = [
 
       return (
         <div className="flex justify-between ">
-          <span className="text-nowrap">{shortLink}</span>
+          <Link href={shortLink} target="_blank" rel="noopener noreferrer" className="">
+          <span className="text-nowrap hover:underline">{shortLink.length > 30 && `${shortLink.slice(0,30)}...`}</span>
+          </Link>
           <CopyToClipboard text={shortLink} />
         </div>
       );

@@ -3,12 +3,12 @@ import { ArrowRightCircleIcon, Link } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import AutoPasteClipboardToggle from "./auto-paste-clipboard";
 import LinkHistory from "./link-history";
-import { LinkDetailsProps } from "@/types/";
+import { DesktopHistoryTableColumn, LinkDetailsProps } from "@/types/";
 import { toast, Toaster } from "sonner";
 import { Api } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 
-const Main = ({ linkDetails }: { linkDetails: LinkDetailsProps[] }) => {
+const Main = ({ linkDetails,refreshUrls }: { linkDetails: LinkDetailsProps[],refreshUrls: (urls: DesktopHistoryTableColumn[])=>void }) => {
   const [checkedState, setCheckedState] = useState<boolean>(false);
   const [textFromClipboard, setTextFromClipboard] = useState<string>("");
   const { data: session } = useSession();
@@ -67,6 +67,14 @@ const Main = ({ linkDetails }: { linkDetails: LinkDetailsProps[] }) => {
                   userId: session?.user.id,
                 });
                 setTextFromClipboard("");
+            if(response.status === 200)  return toast.success("Short Link already exist");
+               
+                 //@ts-ignore
+                const refresh = await Api.get(`/url/${session?.user.id}`);
+                //@ts-ignore
+
+                if (!refresh.data.data.length > 0) return;
+                refreshUrls(refresh.data.data);
                 return toast.success("Link shortening succesful");
               } catch (error) {
                 setTextFromClipboard("");

@@ -17,11 +17,10 @@ dotenv.config();
 
 const app = express();
 app.use(CORS(corsOption()));
-console.log(corsOption());
 
 app.use(cookieParser());
 app.use(express.json());
-const PORT = process.env.port; // Corrected environment variable
+const PORT = process.env.port || 4000; // Corrected environment variable
 if (!PORT) {
   throw new Error("Please provide a valid port");
 }

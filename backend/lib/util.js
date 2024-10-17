@@ -31,8 +31,11 @@ export const createJWT = (user) =>
   });
 
 export const verifyJwt = (req, res, next) => {
-  console.log("Cookies received:", req.cookies);
-  console.log("Token cookie:", req.cookies.token);
-  console.log("Headers:", req.headers);
-  next();
+ try{
+   const valid = jwt.verify(req.cookies.token, process.env.JWT_SECRET_KEY);
+   next();
+ }catch(error){
+   console.log(error)
+ 
+ }
 };

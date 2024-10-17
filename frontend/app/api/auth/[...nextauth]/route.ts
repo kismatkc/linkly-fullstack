@@ -5,25 +5,7 @@ import { JWT } from "next-auth/jwt";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-function convertToObject(data: any) {
-  // Check if the input is already an object
-  if (typeof data === "object" && !Array.isArray(data)) {
-    return data; // Return as is if it's already an object
-  }
 
-  // If it's an array, convert it to an object
-  if (Array.isArray(data)) {
-    return data.reduce((acc, item, index) => {
-      // You can customize how you want to structure the object
-      // Here, we use the index as the key
-      acc[index] = item;
-      return acc;
-    }, {});
-  }
-
-  // If it's neither an array nor an object, return an empty object or handle as needed
-  return {};
-}
 
 const authOptions: NextAuthOptions = {
   providers: [
@@ -92,12 +74,7 @@ const authOptions: NextAuthOptions = {
       }
     },
     async jwt({ token, user, session }) {
-      if (user) {
-        let data = convertToObject(user);
-        const response = await Api.post("/authenticate-user", data, {
-          withCredentials: true,
-        });
-      }
+   
 
       //@ts-ignore
       if (user?.[0]) {
