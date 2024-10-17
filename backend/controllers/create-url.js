@@ -8,12 +8,13 @@ export default async function CreateUrl(req, res) {
     const urlExist = await Url.findOne({ originalLink: longUrl, userId });
     if (urlExist) {
       return res.status(200).json(urlExist[0]);
-      
     }
-
-    const shortLink = `https://31e908fa-c906-497c-9c86-bb5450c92e73-00-3dkixqsx8vovm.kirk.repl.co:3000/${crypto
+    const shortLink = `https://backend.unfiltereddopamine.com/${crypto
       .randomBytes(4)
       .toString("hex")}`;
+    // const shortLink = `https://31e908fa-c906-497c-9c86-bb5450c92e73-00-3dkixqsx8vovm.kirk.repl.co:3000/${crypto
+    //   .randomBytes(4)
+    //   .toString("hex")}`;
     // const shortLink = `http://localhost:4000/${crypto
     //   .randomBytes(4)
     //   .toString("hex")}`;
