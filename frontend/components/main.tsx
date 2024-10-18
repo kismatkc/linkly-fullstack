@@ -42,9 +42,6 @@ const Main = ({
           streamlines your online experience.
         </p>
         <div className="p-8 flex items-stretch md:p-20 justify-center">
-          <div className="flex-row-center rounded-full -mr-9 z-20">
-            <Link />
-          </div>
           <input
             value={textFromClipboard}
             onChange={(e) => {
@@ -100,15 +97,6 @@ const Main = ({
         </p>
 
         <AutoPasteClipboardToggle setCheckedState={setCheckedState} />
-        <p className="text-lg p-4 text-center md:text-xl">
-          You can create&nbsp;
-          <span className="text-brand-pink font-semibold">05</span> more
-          links.&nbsp;
-          <span className="underline font-medium cursor-pointer">
-            Register Now
-          </span>
-          &nbsp;to enjoy unlimited usage
-        </p>
       </section>
 
       <LinkHistory linkDetails={linkDetails} refreshUrls={refreshUrls} />
