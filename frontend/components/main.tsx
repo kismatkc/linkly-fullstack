@@ -89,7 +89,7 @@ const Main = ({
         </div>
 
         <p
-          className={`text-center -mt-20 text-red-500 visible ${
+          className={`text-center -mt-20 max-sm:-mt-10 text-red-500 visible ${
             textFromClipboard && "invisible"
           }`}
         >
