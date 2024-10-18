@@ -36,7 +36,7 @@ function refreshUrls(refreshedUrls: DesktopHistoryTableColumn[]){
   return (
     <>
       <Header />
-      <Main linkDetails={urls} refreshUrls={refreshUrls}/>;
+      <Main linkDetails={urls} refreshUrls={refreshUrls}/>
     </>
   );
 }
