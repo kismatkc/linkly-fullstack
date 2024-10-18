@@ -66,22 +66,7 @@ export function DataTable<TData, TValue>({
       </div>
       <div className="flex justify-between items-center">
         <h1 className=" w-full text-left py-4 font-semibold pl-2 text-lg md:text-2xl">{`History (${data.length})`}</h1>
-        <div className="flex gap-x-4  ">
-          <Button
-            variant="outline"
-            className="flex gap-x-2  border-none cursor-pointer"
-          >
-            <PencilRuler className="h-5 w-5" />
-            <span>Bulk edit </span>
-          </Button>
-          <Button
-            variant="outline"
-            className="flex gap-x-2   border-none cursor-pointer"
-          >
-            <Filter className="h-5 w-5" />
-            <span>Filter </span>
-          </Button>
-        </div>
+        
       </div>
       <div className="rounded-md border flex-column-center w-full ">
         <Table>

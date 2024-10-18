@@ -71,10 +71,10 @@ const columns: ColumnDef<DesktopHistoryTableColumn>[] = [
   },
   {
     accessorKey: "action",
-    header: "Action",
+    header: "",
     cell: () => (
       <div className="flex gap-x-8">
-        <SquarePen className="cursor-pointer" size={20} />
+    
         <Trash className="cursor-pointer " size={20} />
       </div>
     ),
