@@ -18,6 +18,7 @@ function refreshUrls(refreshedUrls: DesktopHistoryTableColumn[]){
       try {
  const user = data.user;
         if (user) {
+          console.log("request fired");
           const response = await Api.post("/authenticate-user", user);
         }
 

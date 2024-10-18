@@ -16,6 +16,7 @@ async function AuthenticateUser(req, res) {
     res.cookie("token", token, cookieOptions);
     console.log("cookies", res.getHeaders());
 
+    
     return res.status(200).json({ message: "Authentication successful" });
   } catch (error) {
     console.error("Error in AuthenticateUser:", error);

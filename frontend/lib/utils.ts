@@ -7,6 +7,9 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 function Ambient(environment: string | undefined){
+  console.log(process.env)
+  
+  
   let apiOptions={
     baseURL: "http://localhost:4000/api",
     withCredentials: true
@@ -22,6 +25,6 @@ function Ambient(environment: string | undefined){
   
   
 }
-export const Api = axios.create(Ambient(process.env.ENV));
+export const Api = axios.create(Ambient(process.env.NEXT_PUBLIC_ENV));
 
 
