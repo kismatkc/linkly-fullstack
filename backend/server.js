@@ -18,7 +18,6 @@ dotenv.config();
 
 const app = express();
 app.use(CORS(corsOption()));
-console.log(corsOption())
 app.use(cookieParser());
 app.use(express.json());
 const PORT = process.env.port || 4000; // Corrected environment variable
@@ -35,7 +34,6 @@ app.use("/api", AuthenticateUserRoute);
 app.use("/api", AuthenticateLinklyUserRoute);
 app.use("/api", AuthenticateGoogleUserRoute);
 app.use("/", RedirectUserRoute);
-
 
 app.use("/api", GetUrlsRoute);
 app.use("/api", CreateUrlRoute);
