@@ -8,7 +8,13 @@ import { toast, Toaster } from "sonner";
 import { Api } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 
-const Main = ({ linkDetails,refreshUrls }: { linkDetails: LinkDetailsProps[],refreshUrls: (urls: DesktopHistoryTableColumn[])=>void }) => {
+const Main = ({
+  linkDetails,
+  refreshUrls,
+}: {
+  linkDetails: LinkDetailsProps[];
+  refreshUrls: (urls: DesktopHistoryTableColumn[]) => void;
+}) => {
   const [checkedState, setCheckedState] = useState<boolean>(false);
   const [textFromClipboard, setTextFromClipboard] = useState<string>("");
   const { data: session } = useSession();
@@ -67,9 +73,10 @@ const Main = ({ linkDetails,refreshUrls }: { linkDetails: LinkDetailsProps[],ref
                   userId: session?.user.id,
                 });
                 setTextFromClipboard("");
-            if(response.status === 200)  return toast.success("Short Link already exist");
-               
-                 //@ts-ignore
+                if (response.status === 200)
+                  return toast.success("Short Link already exist");
+
+                //@ts-ignore
                 const refresh = await Api.get(`/url/${session?.user.id}`);
                 //@ts-ignore
 
@@ -104,10 +111,9 @@ const Main = ({ linkDetails,refreshUrls }: { linkDetails: LinkDetailsProps[],ref
         </p>
       </section>
 
-      <LinkHistory linkDetails={linkDetails} />
+      <LinkHistory linkDetails={linkDetails} refreshUrls={refreshUrls} />
     </section>
   );
 };
 
 export default Main;
-

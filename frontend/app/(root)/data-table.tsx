@@ -8,14 +8,7 @@ import {
   useReactTable,
   getSortedRowModel,
 } from "@tanstack/react-table";
-import {
-  PencilRuler,
-  Filter,
-  Clock,
-  ChartArea,
-  Pointer,
-  Settings,
-} from "lucide-react";
+
 import {
   Table,
   TableBody,
@@ -24,16 +17,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { DesktopHistoryTableColumn } from "@/types";
 import { Button } from "@/components/ui/button";
+import { RefreshCwIcon } from "lucide-react";
+import RefreshButton from "@/components/refresh-button";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  refreshUrls: (urls: DesktopHistoryTableColumn[]) => void;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  refreshUrls,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
@@ -50,10 +48,10 @@ export function DataTable<TData, TValue>({
 
   return (
     <section className="p-12 w-full">
-
       <div className="flex justify-between items-center">
         <h1 className=" w-full text-left py-4 font-semibold pl-2 text-lg md:text-2xl">{`History (${data.length})`}</h1>
-        
+
+        <RefreshButton refreshUrls={refreshUrls} />
       </div>
       <div className="rounded-md border flex-column-center w-full ">
         <Table>

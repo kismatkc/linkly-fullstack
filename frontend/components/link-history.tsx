@@ -2,13 +2,18 @@
 import MobileHistoryTable from "./mobile-view-history";
 import { useMediaQuery } from "react-responsive";
 
-
-import { LinkDetailsProps } from "@/types/";
+import { DesktopHistoryTableColumn, LinkDetailsProps } from "@/types/";
 import { useEffect, useState } from "react";
 import columns from "@/app/(root)/columns";
 import { DataTable } from "@/app/(root)/data-table";
 
-const LinkHistory = ({ linkDetails }: { linkDetails: LinkDetailsProps[] }) => {
+const LinkHistory = ({
+  linkDetails,
+  refreshUrls,
+}: {
+  linkDetails: LinkDetailsProps[];
+  refreshUrls: (urls: DesktopHistoryTableColumn[]) => void;
+}) => {
   const [onClient, setOnClient] = useState<boolean>(false);
   useEffect(() => {
     setOnClient(true);
@@ -23,6 +28,8 @@ const LinkHistory = ({ linkDetails }: { linkDetails: LinkDetailsProps[] }) => {
     return <MobileHistoryTable linkDetails={linkDetails} />;
   }
 
-  return <DataTable columns={columns} data={linkDetails} />;
+  return (
+    <DataTable columns={columns} data={linkDetails} refreshUrls={refreshUrls} />
+  );
 };
 export default LinkHistory;

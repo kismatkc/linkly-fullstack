@@ -8,17 +8,16 @@ import { DesktopHistoryTableColumn } from "@/types";
 
 export default function Home() {
   const { data } = useSession();
-  const [urls, setUrls] = useState<DesktopHistoryTableColumn[]>([ ]);
-function refreshUrls(refreshedUrls: DesktopHistoryTableColumn[]){
-  setUrls(refreshedUrls);
-}
+  const [urls, setUrls] = useState<DesktopHistoryTableColumn[]>([]);
+  function refreshUrls(refreshedUrls: DesktopHistoryTableColumn[]) {
+    setUrls(refreshedUrls);
+  }
   useEffect(() => {
     async function getUrls() {
       if (!data) return;
       try {
- const user = data.user;
+        const user = data.user;
         if (user) {
-          console.log("request fired");
           const response = await Api.post("/authenticate-user", user);
         }
 
@@ -37,7 +36,7 @@ function refreshUrls(refreshedUrls: DesktopHistoryTableColumn[]){
   return (
     <>
       <Header />
-      <Main linkDetails={urls} refreshUrls={refreshUrls}/>
+      <Main linkDetails={urls} refreshUrls={refreshUrls} />
     </>
   );
 }

@@ -18,6 +18,7 @@ const columns: ColumnDef<DesktopHistoryTableColumn>[] = [
     header: "Short Link",
     cell: ({ row }) => {
       const shortLink: string = row.getValue("shortLink");
+      console.log(shortLink);
 
       return (
         <div className="flex justify-between ">
@@ -28,7 +29,9 @@ const columns: ColumnDef<DesktopHistoryTableColumn>[] = [
             className=""
           >
             <span className="text-nowrap hover:underline">
-              {shortLink.length > 30 && `${shortLink.slice(0, 30)}...`}
+              {shortLink.length > 30
+                ? `${shortLink.slice(0, 30)}...`
+                : shortLink}
             </span>
           </Link>
           <CopyToClipboard text={shortLink} />
@@ -82,15 +85,20 @@ const columns: ColumnDef<DesktopHistoryTableColumn>[] = [
     accessorKey: "action",
     header: "",
     cell: ({ row }) => {
+      console.log("row", row.original);
+
       return (
-        <Button variant="none" className="cursor-pointer"
-          
+        <Button
+          variant="outline"
+          className="cursor-pointer border-none"
           onClick={async () => {
             try {
               //@ts-ignore
               const response = await Api.post("/delete-url", {
                 longUrl: row.original.originalLink,
-                userId: row.original._id,
+                //@ts-ignore
+
+                userId: row.original.userId,
               });
               return toast.success("Link Deleted");
             } catch (error: unknown) {
@@ -98,7 +106,7 @@ const columns: ColumnDef<DesktopHistoryTableColumn>[] = [
             }
           }}
         >
-          <Trash  size={20} />
+          <Trash size={20} />
         </Button>
       );
     },
