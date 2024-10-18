@@ -40,7 +40,10 @@ const MobileHistoryTable = ({
             </div>
 
             <AccordionContent className="text-center w-full">
-              Yes. It adheres to the WAI-ARIA design pattern.
+               <span className="text-left">
+              {link.originalLink}
+               
+               </span>
             </AccordionContent>
           </AccordionItem>
         ))}
