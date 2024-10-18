@@ -50,20 +50,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <section className="p-12 w-full">
-      <div className="flex-row-center gap-x-6 [&>figure]:p-4 mb-4">
-        <figure className="flex-row-center gap-x-2">
-          <Clock className="h-5 w-5" />
-          <figcaption className="text-center">Clock</figcaption>
-        </figure>
-        <figure className="flex-row-center gap-x-2">
-          <Settings className="h-5 w-5" />
-          <figcaption className="text-center">Settings</figcaption>
-        </figure>
-        <figure className="flex-row-center gap-x-2">
-          <ChartArea className="h-5 w-5" />
-          <figcaption className="text-center">Statistics</figcaption>
-        </figure>
-      </div>
+
       <div className="flex justify-between items-center">
         <h1 className=" w-full text-left py-4 font-semibold pl-2 text-lg md:text-2xl">{`History (${data.length})`}</h1>
         

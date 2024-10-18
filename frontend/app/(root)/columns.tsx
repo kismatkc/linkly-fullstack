@@ -9,6 +9,8 @@ import Link from "next/link";
 import { DesktopHistoryTableColumn } from "@/types/index";
 import CopyToClipboard from "@/components/copyToClipboard";
 import UrlQrcode from "@/components/url-qrcode";
+import { Api } from "@/lib/utils";
+import { toast, Toaster } from "sonner";
 
 const columns: ColumnDef<DesktopHistoryTableColumn>[] = [
   {
@@ -19,8 +21,15 @@ const columns: ColumnDef<DesktopHistoryTableColumn>[] = [
 
       return (
         <div className="flex justify-between ">
-          <Link href={shortLink} target="_blank" rel="noopener noreferrer" className="">
-          <span className="text-nowrap hover:underline">{shortLink.length > 30 && `${shortLink.slice(0,30)}...`}</span>
+          <Link
+            href={shortLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className=""
+          >
+            <span className="text-nowrap hover:underline">
+              {shortLink.length > 30 && `${shortLink.slice(0, 30)}...`}
+            </span>
           </Link>
           <CopyToClipboard text={shortLink} />
         </div>
@@ -72,12 +81,27 @@ const columns: ColumnDef<DesktopHistoryTableColumn>[] = [
   {
     accessorKey: "action",
     header: "",
-    cell: () => (
-      <div className="flex gap-x-8">
-    
-        <Trash className="cursor-pointer " size={20} />
-      </div>
-    ),
+    cell: ({ row }) => {
+      return (
+        <Button variant="none" className="cursor-pointer"
+          
+          onClick={async () => {
+            try {
+              //@ts-ignore
+              const response = await Api.post("/delete-url", {
+                longUrl: row.original.originalLink,
+                userId: row.original._id,
+              });
+              return toast.success("Link Deleted");
+            } catch (error: unknown) {
+              return toast.error("Error Deleting Link");
+            }
+          }}
+        >
+          <Trash  size={20} />
+        </Button>
+      );
+    },
   },
 ];
 

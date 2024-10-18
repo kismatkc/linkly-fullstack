@@ -9,6 +9,7 @@ import AuthenticateUserRoute from "./routes/authentice-user-route.js";
 import AuthenticateLinklyUserRoute from "./routes/authentice-linklyuser-route.js";
 import AuthenticateGoogleUserRoute from "./routes/authentice-googleuser-route.js";
 import CreateUrlRoute from "./routes/create-url-route.js";
+import DeleteUrlRoute from "./routes/delete-url-route.js";
 import RedirectUserRoute from "./routes/redirect-user-route.js";
 import GetUrlsRoute from "./routes/get-all-urls.js";
 import cookieParser from "cookie-parser";
@@ -35,10 +36,10 @@ app.use("/api", AuthenticateLinklyUserRoute);
 app.use("/api", AuthenticateGoogleUserRoute);
 app.use("/", RedirectUserRoute);
 
-app.use("/api", verifyJwt);
 
-app.use("/api", CreateUrlRoute);
 app.use("/api", GetUrlsRoute);
+app.use("/api", CreateUrlRoute);
+app.use("/api", DeleteUrlRoute);
 app.use("/", (req, res) => {
   res.send("Hello worlbmdpoo");
 });

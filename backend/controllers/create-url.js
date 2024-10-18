@@ -9,15 +9,26 @@ export default async function CreateUrl(req, res) {
     if (urlExist) {
       return res.status(200).json(urlExist[0]);
     }
-    const shortLink = `https://backend.unfiltereddopamine.com/${crypto
+    let environment = process.env.NEXT_PUBLIC_ENV;
+    let shortLink = `http://localhost:4000/${crypto
       .randomBytes(4)
       .toString("hex")}`;
-    // const shortLink = `https://31e908fa-c906-497c-9c86-bb5450c92e73-00-3dkixqsx8vovm.kirk.repl.co:3000/${crypto
-    //   .randomBytes(4)
-    //   .toString("hex")}`;
-    // const shortLink = `http://localhost:4000/${crypto
-    //   .randomBytes(4)
-    //   .toString("hex")}`;
+    if(environment === "replit"){
+         shortLink = `https://31e908fa-c906-497c-9c86-bb5450c92e73-00-3dkixqsx8vovm.kirk.repl.co:3000/${crypto
+      .randomBytes(4)
+      .toString("hex")}`;
+  }
+
+    if(environment === "production"){
+
+     shortLink = `https://backend.unfiltereddopamine.com/${crypto
+      .randomBytes(4)
+      .toString("hex")}`;
+     
+  }
+    
+ 
+
     const url = await Url.create({
       originalLink: longUrl,
       shortLink: shortLink,
