@@ -8,7 +8,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Linkly,
+  title: "Linkly",
   description: "Lets shorten your boring links",
 };
 
