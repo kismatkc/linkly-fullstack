@@ -18,7 +18,6 @@ const columns: ColumnDef<DesktopHistoryTableColumn>[] = [
     header: "Short Link",
     cell: ({ row }) => {
       const shortLink: string = row.getValue("shortLink");
-      console.log(shortLink);
 
       return (
         <div className="flex justify-between ">
@@ -85,7 +84,6 @@ const columns: ColumnDef<DesktopHistoryTableColumn>[] = [
     accessorKey: "action",
     header: "",
     cell: ({ row }) => {
-      console.log("row", row.original);
 
       return (
         <Button

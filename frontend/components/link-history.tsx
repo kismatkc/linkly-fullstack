@@ -25,7 +25,9 @@ const LinkHistory = ({
   if (!onClient) return null;
 
   if (useAccordian) {
-    return <MobileHistoryTable linkDetails={linkDetails} />;
+    return (
+      <MobileHistoryTable linkDetails={linkDetails} refreshUrls={refreshUrls} />
+    );
   }
 
   return (
