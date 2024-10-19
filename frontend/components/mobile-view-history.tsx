@@ -7,6 +7,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { CopyIcon } from "lucide-react";
+import Link from "next/link";
+import CopyToClipboard from "./copyToClipboard";
 
 const MobileHistoryTable = ({
   linkDetails,
@@ -30,20 +32,24 @@ const MobileHistoryTable = ({
             className="flex flex-col border-none "
           >
             <div className="flex-row-center justify-evenly grow">
-              <span className="text-left">
-                {link.shortLink.length > 20
-                  ? `${link.shortLink.slice(0, 20) + "..."} `
-                  : link.shortLink}
-              </span>
-              <CopyIcon className="cursor-pointer" />
+              <Link
+                href={link.shortLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className=""
+              >
+                <span className="text-left hover:underline">
+                  {link.shortLink.length > 20
+                    ? `${link.shortLink.slice(0, 20) + "..."} `
+                    : link.shortLink}
+                </span>
+              </Link>
+              <CopyToClipboard text={link.shortLink} />
               <AccordionTrigger></AccordionTrigger>
             </div>
 
-            <AccordionContent className="text-center w-full">
-               <span className="text-left">
-              {link.originalLink}
-               
-               </span>
+            <AccordionContent className="w-full">
+              <span className="pl-[11%] w-full">{link.originalLink}</span>
             </AccordionContent>
           </AccordionItem>
         ))}
